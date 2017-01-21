@@ -1,0 +1,8 @@
+[{
+    "name":"Facebook Messanger",
+    "url":"https://www.messenger.com/login/",
+    "img":"messanger.png",
+    "dom": {"user": {"name":"_3oh-", "click":[],"keypress":[]},
+      "send": {"name":"inputtext _55r1 _5f0v _43di", "click":["_4qba"], "keypress":["spacebar"]}
+    }
+}]

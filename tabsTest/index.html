@@ -8,12 +8,9 @@
         <script type="text/javascript" src="tabs.js"></script>
         <link rel="stylesheet" href="../node_modules/electron-tabs/electron-tabs.css">
     </head>
-    <body onload="init()">
-        <div class="etabs-tabgroup">
-            <div class="etabs-tabs"></div>
-            <div class="etabs-buttons"></div>
-        </div>
-        <div class="etabs-views"></div>
+    <body onload="addIframe('http://google.ca')">
+        <button onclick="addIframe('http://github.com')">addTab</button>
+        <ul id="frames"></ul>
         
     </body>
 </html>
