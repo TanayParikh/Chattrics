@@ -1,7 +1,8 @@
 'use strict'
 
 const { app, BrowserWindow } = require('electron')
-
+const url = require('url')
+const path = require('path')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -9,15 +10,20 @@ let mainWindow
 const isDev = process.env.NODE_ENV === 'development'
 
 function createWindow () {
-  // Create the browser window.
+  // Create the browser window
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600
+    width: 600,
+    height: 400,
+    fullscreen: true
   })
 
   // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/dist/index.html`)
-
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'tabs_test.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+// `file://${__dirname}/dist/index.html`
   // Open the DevTools.
   if (isDev) {
     mainWindow.webContents.openDevTools()
