@@ -1,5 +1,8 @@
 {
-    "name": "Chattrics",
-    "version": "0.0.1",
-    "main": "main.js"
+  "name": "Chattrics",
+  "version": "0.0.1",
+  "main": "main.js",
+  "dependencies": {
+    "bulma": "^0.3.1"
+  }
 }
