@@ -23,5 +23,8 @@
     "chart.js": "^2.4.0",
     "electron-tabs": "^0.4.2",
     "vue": "^2.1.10"
+  },
+  "devDependencies": {
+    "electron-reload": "^1.1.0"
   }
 }
