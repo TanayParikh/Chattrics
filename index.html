@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="node_modules/bulma/css/bulma.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
+
   </head>
   <body>
     <h1>Hello World!</h1>
@@ -16,14 +17,23 @@
     and Electron <script>document.write(process.versions.electron)</script>.
 
 
-    <div class="tabs is-centered">
-      <ul>
-        <li class="is-active"><a>Pictures</a></li>
-        <li><a>Music</a></li>
-        <li><a>Videos</a></li>
-        <li><a>Documents</a></li>
-      </ul>
+    <div id="root" class="container">
+      <tabs>
+        <tab name="A" :selected="true">
+          <h1>Hi</h1>
+        </tab>
+        <tab name="AB">
+          <h1>Bye</h1>
+        </tab>
+        <tab name="AC">
+          <h1>Putty</h1>
+        </tab>
+        <tab name="AD">
+          <h1>sdf</h1>
+        </tab>
+      </tabs>
     </div>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 
@@ -54,6 +64,8 @@
 
 
 
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="app.js"></script>
 
   </body>
 </html>
