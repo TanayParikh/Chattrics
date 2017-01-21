@@ -1,8 +1,25 @@
 {
   "name": "Chattrics",
-  "version": "0.0.1",
+  "version": "0.0.1", 
+  "description": "Aggregated, open source chat client.", 
+  "repository": "TanayParikh/Chattrics", 
+  "homepage": "https://github.com/TanayParikh/Chattrics", 
+  "license": "", 
+  "author": { 
+    "name": "", 
+    "email": "", 
+    "url": "" 
+  }, 
+  "keywords": [ 
+    "chat" 
+  ], 
+  "engines": { 
+    "node": ">=4", 
+    "npm": ">=3" 
+  }, 
   "main": "main.js",
   "dependencies": {
     "bulma": "^0.3.1"
+      
   }
 }
