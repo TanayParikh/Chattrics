@@ -4,12 +4,23 @@
   <head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
   </head>
   <body>
     <h1>Hello World!</h1>
     We are using node <script>document.write(process.versions.node)</script>,
     Chrome <script>document.write(process.versions.chrome)</script>,
     and Electron <script>document.write(process.versions.electron)</script>.
+
+    <div class="tabs is-centered">
+      <ul>
+        <li class="is-active"><a>Pictures</a></li>
+        <li><a>Music</a></li>
+        <li><a>Videos</a></li>
+        <li><a>Documents</a></li>
+      </ul>
+    </div>
   </body>
 </html>
-
