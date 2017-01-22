@@ -1,5 +1,7 @@
 var fs = require('fs')
 
+var settings
+
 Vue.component('tabs', {
   template: `
   <div>
@@ -12,8 +14,8 @@ Vue.component('tabs', {
     </div>
     <div>
       <slot> </slot>
-      <div v-for="tab in tabs">
-        <webview v-show="tab.isActive" v-bind:src="tab.url" style="display:inline-flex; width:100%; height:480px"></webview>
+      <div v-for="(tab,index) in tabs">
+        <webview  v-show="tab.isActive" v-bind:id="'view' + index" v-bind:src="tab.url" style="display:inline-flex; width:100%; height:480px"></webview>
 
       </div>
 
@@ -29,8 +31,17 @@ Vue.component('tabs', {
 
   methods: {
     selectTab(selectedTab) {
-      this.tabs.forEach(tab => {
+      this.tabs.forEach((tab,index) => {
         tab.isActive = (tab.name == selectedTab.name);
+        if(tab.isActive){
+         var view = document.getElementById("view" + index)
+         var js = 'document.getElementById("email").setAttribute("value","username");document.getElementById("pass").setAttribute("value","password"); document.getElementById("loginbutton").click()'
+         js = js.replace("username", settings[index-1].username)
+         js = js.replace("password", settings[index-1].password)
+         
+         view.executeJavaScript(js)
+         view.openDevTools()
+        }
       });
     }
   }
@@ -77,13 +88,13 @@ Vue.component('settings',{
       <div>
 
         <div class="section">
-          <div v-for="tab in tabs">
+          <div v-for="(tab, objKey) in tabs">
+            <div v-show="tab.type === 'userPass'">
             <h2 class="title is-3">{{tab.name}}</h2>
-            <form class="control">
-              <input class="input" type="text" placeholder="Username/Email" v-bind:name="tab.name + -Username"/>
-              <input class="input" type="text" placeholder="Password" v-bind:name="tab.name + -Password"/>
-              <button class="button is-primary"> Save</button>
-            </form>
+              <input class="input" type="text" placeholder="Username/Email" v-bind:value="tab.username" v-bind:id="'user' + objKey"/>
+              <input class="input" type="Password" placeholder="Password" v-bind:value="tab.password" v-bind:id="'pass' + objKey"/>
+              <button class="button is-primary" v-bind:onClick= "'setUserSettings(' + objKey +') '"> Save</button>
+            </div>
           </div>
         </div>
       </div>`,
@@ -99,14 +110,24 @@ Vue.component('settings',{
 });
 
 window.onload = function(){
+
+  fs.readFile('settings.json', (err,data) => {
+        settings = JSON.parse(data)
+        for(var setting in settings){
+          vm.$children[1].$children[0].$children[0].addSetting(settings[setting])
+        }
+    })
+
+  
    fs.readFile('services.json', (err,data) => {
         var chatData = JSON.parse(data)
         for(var service in chatData){
             console.log(vm.$children)
             vm.$children[0].addTab(chatData[service])
-            vm.$children[1].$children[0].$children[0].addSetting(chatData[service])
+            
         }
     })
+
 }
 
 
@@ -144,3 +165,13 @@ var vm = new Vue({
         }
       };
 })();
+
+
+function setUserSettings(index){
+  var userName = document.getElementById("user" + index).value
+  var password = document.getElementById("pass" + index).value
+  settings[index].username = userName
+  settings[index].password = password
+  var toSave = JSON.stringify(settings)
+  fs.writeFile("settings.json",toSave)
+}
