@@ -6,12 +6,17 @@
     <title>Chattrics</title>
 
     <link rel="stylesheet" href="node_modules/bulma/css/bulma.css" />
-    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="tabs.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
 
   </head>
   <body>
     <section class="hero is-primary is-bold is-fluid" style="-webkit-app-region: drag">
+      <div id="title-bar-btns">
+         <button id="min-btn"><small><i class="fa fa-window-minimize"></i></small></button>
+         <button id="max-btn"><small><i class="fa fa-window-maximize"></i></small></button>
+         <button id="close-btn"><small><i class="fa fa-times"></i></small></button>
+      </div>
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
@@ -19,6 +24,7 @@
           </h1>
           <h2 class="subtitle">
             Your aggregated, open-source, chat client!
+
           </h2>
         </div>
       </div>

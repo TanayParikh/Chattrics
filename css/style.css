@@ -1,6 +1,4 @@
-
-
-/* Let's get this party started */
+/* Scroll bar */
 ::-webkit-scrollbar {
 
   position: absolute;
@@ -31,4 +29,28 @@
 }
 ::-webkit-scrollbar-thumb:window-inactive {
 	background: rgba(40,40,40,0.2);
+}
+
+
+/* Window Buttons (Max, Min, Close) */
+#title-bar-btns {
+ -webkit-app-region: no-drag;
+ position: fixed;
+ top: 1px;
+ right: 0px;
+}
+
+#title-bar-btns button {
+ height: 24px;
+ width: 24px;
+ padding-top:5px;
+
+ background-color: transparent;
+ border: none;
+ color: #F1F1F1;
+
+}
+
+#title-bar-btns button:hover {
+ background-color: #00d1b2;
 }
