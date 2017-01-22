@@ -21,6 +21,7 @@
   "dependencies": {
     "bulma": "^0.3.1",
     "chart.js": "^2.4.0",
+    "font-awesome": "^4.7.0",
     "vue": "^2.1.10"
   },
   "devDependencies": {
