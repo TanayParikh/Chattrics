@@ -11,19 +11,28 @@
 
   </head>
   <body>
-    <h1 class="title is-1">Welcome to Chattrics!</h1>
-    <h2 class="title is-3">Your aggregated, open-source, chat client.</h2>
+    <section class="hero is-primary is-bold is-fluid">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            Welcome to Chattrics!
+          </h1>
+          <h2 class="subtitle">
+            Your aggregated, open-source, chat client!
+          </h2>
+        </div>
+      </div>
+    </section>
 
-
-    <div id="root" class="container">
+    <div id="root" style="padding-top: 15px;">
       <addtab></addtab>
-
       <tabs>
         <tab name="Settings" :selected="true">
           <settings></settings>
         </tab>
       </tabs>
     </div>
+
 
 
     <script src="node_modules/chart.js/dist/Chart.min.js"></script>
