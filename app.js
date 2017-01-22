@@ -38,9 +38,9 @@ Vue.component('tabs', {
          var js = 'document.getElementById("email").setAttribute("value","username");document.getElementById("pass").setAttribute("value","password"); document.getElementById("loginbutton").click()'
          js = js.replace("username", settings[index-1].username)
          js = js.replace("password", settings[index-1].password)
-         
+
          view.executeJavaScript(js)
-         view.openDevTools()
+         //view.openDevTools()
         }
       });
     }
@@ -90,10 +90,24 @@ Vue.component('settings',{
         <div class="section">
           <div v-for="(tab, objKey) in tabs">
             <div v-show="tab.type === 'userPass'">
-            <h2 class="title is-3">{{tab.name}}</h2>
-              <input class="input" type="text" placeholder="Username/Email" v-bind:value="tab.username" v-bind:id="'user' + objKey"/>
-              <input class="input" type="Password" placeholder="Password" v-bind:value="tab.password" v-bind:id="'pass' + objKey"/>
-              <button class="button is-primary" v-bind:onClick= "'setUserSettings(' + objKey +') '"> Save</button>
+
+            <div class="section">
+              <h2 class="title is-3">{{tab.name}}</h2>
+
+              <div class="columns">
+                <div class="column">
+                  <input class="input" type="text" placeholder="Username/Email" v-bind:value="tab.username" v-bind:id="'user' + objKey"/>
+                </div>
+                <div class="column">
+                  <input class="input" type="Password" placeholder="Password" v-bind:value="tab.password" v-bind:id="'pass' + objKey"/>
+                </div>
+                <div class="column">
+                  <button class="button is-primary" v-bind:onClick= "'setUserSettings(' + objKey +') '"> Save</button>
+                </div>
+              </div>
+            </div>
+
+
             </div>
           </div>
         </div>
@@ -118,13 +132,13 @@ window.onload = function(){
         }
     })
 
-  
+
    fs.readFile('services.json', (err,data) => {
         var chatData = JSON.parse(data)
         for(var service in chatData){
             console.log(vm.$children)
             vm.$children[0].addTab(chatData[service])
-            
+
         }
     })
 
