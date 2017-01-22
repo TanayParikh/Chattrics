@@ -25,6 +25,7 @@ Vue.component('tabs', {
     selectTab(selectedTab) {
       this.tabs.forEach(tab => {
         tab.isActive = (tab.name == selectedTab.name);
+        console.log(tab.name)
       });
     }
   }
@@ -51,6 +52,37 @@ Vue.component('tab', {
   }
 });
 
-new Vue({
+
+Vue.component('addtab', {
+  template: `
+  <button @click='addTab("newTab","http://github.com")'>Add a new tab</button>
+  `,
+
+  methods: {
+    addTab(name, url){
+        var container = document.getElementById("root");
+        var newTab = document.createElement('tab');
+        newTab.setAttribute("name","vool");
+
+        var para = document.createElement("h1");
+        var node = document.createTextNode("This is new.");
+        para.appendChild(node);
+
+
+        newTab.appendChild(para);
+
+        var newWebview = document.createElement('webview');
+        newWebview.setAttribute("src", url);
+        newWebview.setAttribute("style", "display:inline-flex; width:640px; height:480px");
+        // newTab = '<tab name="vool" :selected="true"><h1>This is new.</h1></tab>';
+        console.log(newTab);
+        var newTab = { name: "Tester2"}
+        this.$parent.$children[1]._data.tabs.push(newTab);
+    }
+  }
+});
+
+
+var vm = new Vue({
   el: '#root'
 });
