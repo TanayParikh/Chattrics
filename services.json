@@ -1,5 +1,5 @@
 [{
-    "name":"Facebook Messanger",
+    "name":"Facebook Messenger",
     "url":"https://www.messenger.com/login/",
     "img":"messanger.png",
     "dom": {"user": {"name":"_3oh-", "click":[],"keypress":[]},

@@ -99,7 +99,7 @@ Vue.component('settings',{
 });
 
 window.onload = function(){
-   fs.readFile('test.json', (err,data) => {
+   fs.readFile('services.json', (err,data) => {
         var chatData = JSON.parse(data)
         for(var service in chatData){
             console.log(vm.$children)
