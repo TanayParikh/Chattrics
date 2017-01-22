@@ -115,7 +115,6 @@ var vm = new Vue({
 });
 
 (function () {
-
       const remote = require('electron').remote;
 
       function init() {
