@@ -1,3 +1,5 @@
+var fs = require('fs')
+
 Vue.component('tabs', {
   template: `
   <div>
@@ -8,9 +10,13 @@ Vue.component('tabs', {
         </li>
       </ul>
     </div>
-
-    <div class="tabs-details">
-      <slot></slot>
+    <div>
+      <slot> </slot>
+      <div v-for="tab in tabs">
+        <webview v-show="tab.isActive" v-bind:src="tab.url" style="display:inline-flex; width:100%; height:480px"></webview>
+      
+      </div>
+      
     </div>
   </div>
   `,
@@ -25,7 +31,6 @@ Vue.component('tabs', {
     selectTab(selectedTab) {
       this.tabs.forEach(tab => {
         tab.isActive = (tab.name == selectedTab.name);
-        console.log(tab.name)
       });
     }
   }
@@ -38,6 +43,7 @@ Vue.component('tab', {
 
   props: {
     name: { required: true },
+    url: {required: true},
     selected: { default: false }
   },
 
@@ -55,32 +61,49 @@ Vue.component('tab', {
 
 Vue.component('addtab', {
   template: `
-  <button @click='addTab("newTab","http://github.com")'>Add a new tab</button>
   `,
 
   methods: {
-    addTab(name, url){
-        var container = document.getElementById("root");
-        var newTab = document.createElement('tab');
-        newTab.setAttribute("name","vool");
-
-        var para = document.createElement("h1");
-        var node = document.createTextNode("This is new.");
-        para.appendChild(node);
-
-
-        newTab.appendChild(para);
-
-        var newWebview = document.createElement('webview');
-        newWebview.setAttribute("src", url);
-        newWebview.setAttribute("style", "display:inline-flex; width:640px; height:480px");
-        // newTab = '<tab name="vool" :selected="true"><h1>This is new.</h1></tab>';
-        console.log(newTab);
-        var newTab = { name: "Tester2"}
+    addTab(client){
+        var newTab = { name: client.name, url: client.url, img: client.img, isActive: false}
+        console.log(newTab)
         this.$parent.$children[1]._data.tabs.push(newTab);
     }
   }
 });
+
+Vue.component('settings',{
+  template: `<div>
+              <div v-for="tab in tabs">
+                <h2 class="title is-3">{{tab.name}}</h2>
+                <form class="control">
+                  <input class="input" type="text" placeholder="Username/Email" v-bind:name="tab.name + -Username"/>
+                  <input class="input" type="text" placeholder="Password" v-bind:name="tab.name + -Password"/>
+                  <button class="button is-primary"> Save</button>
+                </form>
+              </div>
+            </div>`,
+
+  data(){
+    return {tabs: []};
+  },
+  methods: {
+    addSetting(setting){
+      this.$parent.$children[0]._data.tabs.push(setting);
+    }
+  }
+});
+
+window.onload = function(){
+   fs.readFile('test.json', (err,data) => {
+        var chatData = JSON.parse(data)
+        for(var service in chatData){
+            console.log(vm.$children)
+            vm.$children[0].addTab(chatData[service])
+            vm.$children[1].$children[0].$children[0].addSetting(chatData[service])
+        }
+    })
+}
 
 
 var vm = new Vue({
