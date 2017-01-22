@@ -3,7 +3,7 @@ var fs = require('fs')
 Vue.component('tabs', {
   template: `
   <div>
-    <div class="tabs">
+    <div class="tabs is-fullwidth is-large">
       <ul>
         <li v-for="tab in tabs" :class="{ 'is-active': tab.isActive }">
           <a href="#" @click="selectTab(tab)">{{ tab.name }}</a>
@@ -14,9 +14,9 @@ Vue.component('tabs', {
       <slot> </slot>
       <div v-for="tab in tabs">
         <webview v-show="tab.isActive" v-bind:src="tab.url" style="display:inline-flex; width:100%; height:480px"></webview>
-      
+
       </div>
-      
+
     </div>
   </div>
   `,
@@ -73,16 +73,20 @@ Vue.component('addtab', {
 });
 
 Vue.component('settings',{
-  template: `<div>
-              <div v-for="tab in tabs">
-                <h2 class="title is-3">{{tab.name}}</h2>
-                <form class="control">
-                  <input class="input" type="text" placeholder="Username/Email" v-bind:name="tab.name + -Username"/>
-                  <input class="input" type="text" placeholder="Password" v-bind:name="tab.name + -Password"/>
-                  <button class="button is-primary"> Save</button>
-                </form>
-              </div>
-            </div>`,
+  template: `
+      <div>
+
+        <div class="section">
+          <div v-for="tab in tabs">
+            <h2 class="title is-3">{{tab.name}}</h2>
+            <form class="control">
+              <input class="input" type="text" placeholder="Username/Email" v-bind:name="tab.name + -Username"/>
+              <input class="input" type="text" placeholder="Password" v-bind:name="tab.name + -Password"/>
+              <button class="button is-primary"> Save</button>
+            </form>
+          </div>
+        </div>
+      </div>`,
 
   data(){
     return {tabs: []};
