@@ -17,14 +17,27 @@
     "node": ">=4",
     "npm": ">=3"
   },
-  "main": "main.js",
+  "main": "./src/main.js",
   "dependencies": {
     "bulma": "^0.3.1",
     "chart.js": "^2.4.0",
+    "electron-simple-updater": "^1.2.0",
     "font-awesome": "^4.7.0",
-    "vue": "^2.1.10"
-  },
-  "devDependencies": {
+    "vue": "^2.1.10",
     "electron-reload": "^1.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "dist-linux-64": "electron-packager . Chattrics --platform=linux --arch=x64 --electron-version=1.4.15 --overwrite",
+    "dist-all": "electron-packager . Chattrics --all --electron-version=1.4.15 --overwrite",
+    "dist-windows-64": "electron-packager . Chattrics --platform=win32 --arch=x64 --electron-version=1.4.15 --overwrite",
+    "dist-windows-32": "electron-packager . Chattrics --platform=win32 --arch=x86 --electron-version=1.4.15 --overwrite"
+  },
+  "build": {
+    "appId": "chattrics",
+    "app-category-type": "public.app-category.social",
+    "win": {
+      "iconUrl": "https://raw.githubusercontent.com/TanayParikh/Chattrics/master/build/app_icon.ico"
+    }
   }
 }
