@@ -14,7 +14,7 @@ let win
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({width: 1190, height: 720, icon:'build/app_icon.ico', frame:false})
+  win = new BrowserWindow({width: 1190, height: 720, icon: __dirname + '/../app/app_icon.ico', frame:false})
   //win.setMenu(null);
 
 
