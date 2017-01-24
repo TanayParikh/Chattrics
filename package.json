@@ -1,14 +1,15 @@
 {
   "name": "Chattrics",
+  "productName": "Chattrics",
   "version": "0.0.1",
   "description": "Aggregated, open source chat client.",
   "repository": "TanayParikh/Chattrics",
   "homepage": "https://github.com/TanayParikh/Chattrics",
   "license": "",
   "author": {
-    "name": "",
-    "email": "",
-    "url": ""
+    "name": "Tanay Parikh & Chris Hilts",
+    "email": "chat@chattrics.com",
+    "url": "https://chattrics.com"
   },
   "keywords": [
     "chat"
@@ -26,18 +27,21 @@
     "vue": "^2.1.10",
     "electron-reload": "^1.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "electron": "^1.4.15"
+  },
   "scripts": {
-    "dist-linux-64": "electron-packager . Chattrics --platform=linux --arch=x64 --electron-version=1.4.15 --overwrite",
-    "dist-all": "electron-packager . Chattrics --all --electron-version=1.4.15 --overwrite",
-    "dist-windows-64": "electron-packager . Chattrics --platform=win32 --arch=x64 --electron-version=1.4.15 --overwrite",
-    "dist-windows-32": "electron-packager . Chattrics --platform=win32 --arch=x86 --electron-version=1.4.15 --overwrite"
+   "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=app/icons/mac/icon.icns --prune=true --out=Release",
+   "package-win-32": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=app/icons/win/icon.ico --prune=true --out=Release --version-string.ProductName=\"Chattrics\"",
+   "package-win-64": "electron-packager . --overwrite --asar=true --platform=win32 --arch=x64 --icon=app/icons/win/icon.ico --prune=true --out=Release --version-string.ProductName=\"Chattrics\"",
+   "package-linux-32" : "electron-packager . --overwrite --platform=linux --arch=ia32 --icon=app/icons/png/512x512.png --prune=true --out=Release",
+   "package-linux-64" : "electron-packager . --overwrite --platform=linux --arch=x86 --icon=app/icons/png/512x512.png --prune=true --out=Release"
   },
   "build": {
     "appId": "chattrics",
     "app-category-type": "public.app-category.social",
     "win": {
-      "iconUrl": "https://raw.githubusercontent.com/TanayParikh/Chattrics/master/build/app_icon.ico"
+      "iconUrl": "https://raw.githubusercontent.com/TanayParikh/Chattrics/master/app/icons/win/app_icon.ico"
     }
   }
 }
