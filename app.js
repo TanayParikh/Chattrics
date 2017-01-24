@@ -125,7 +125,7 @@ Vue.component('settings',{
 
 window.onload = function(){
 
-  fs.readFile('settings.json', (err,data) => {
+  fs.readFile('build/settings.json', (err,data) => {
         settings = JSON.parse(data)
         for(var setting in settings){
           vm.$children[1].$children[0].$children[0].addSetting(settings[setting])
@@ -133,7 +133,7 @@ window.onload = function(){
     })
 
 
-   fs.readFile('services.json', (err,data) => {
+   fs.readFile('build/services.json', (err,data) => {
         var chatData = JSON.parse(data)
         for(var service in chatData){
             console.log(vm.$children)
@@ -187,5 +187,5 @@ function setUserSettings(index){
   settings[index].username = userName
   settings[index].password = password
   var toSave = JSON.stringify(settings)
-  fs.writeFile("settings.json",toSave)
+  fs.writeFile("build/settings.json",toSave)
 }

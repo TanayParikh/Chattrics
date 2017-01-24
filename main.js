@@ -4,13 +4,17 @@ const url = require('url')
 
 require("electron-reload")(__dirname);
 
+// Just place this code at the entry point of your application:
+//const updater = require('electron-simple-updater');
+//updater.init('https://raw.githubusercontent.com/TanayParikh/Chattrics/master/Release/updates.json');
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({width: 1190, height: 720, icon:'Artwork/Logo/app_icon.png', frame:false})
+  win = new BrowserWindow({width: 1190, height: 720, icon:'build/app_icon.ico', frame:false})
   //win.setMenu(null);
 
 
