@@ -1,6 +1,7 @@
 var fs = require('fs')
 
 var settings
+var tabIndex = 0
 
 Vue.component('tabs', {
   template: `
@@ -15,7 +16,7 @@ Vue.component('tabs', {
     <div>
       <slot> </slot>
       <div v-for="(tab,index) in tabs">
-        <webview  v-show="tab.isActive" v-bind:id="'view' + index" v-bind:src="tab.url" style="display:inline-flex; width:100%; height:480px"></webview>
+        <webview v-bind:id="'view' + index" v-bind:src="tab.url" style="display:inline-flex; width:100%; height:100%"></webview>
 
       </div>
 
@@ -35,14 +36,26 @@ Vue.component('tabs', {
         tab.isActive = (tab.name == selectedTab.name);
         if(tab.isActive){
          var view = document.getElementById("view" + index)
+           var width = window.innerWidth
+          var height = window.innerHeight
+           view.parentNode.setAttribute('style',"width:" + width + "px ; height:" + height + "px")
+         view.setAttribute('style',"display:inline-flex; width:" + width + "px ; height:" + height + "px")
          var js = 'document.getElementById("email").setAttribute("value","username");document.getElementById("pass").setAttribute("value","password"); document.getElementById("loginbutton").click()'
          js = js.replace("username", settings[index-1].username)
          js = js.replace("password", settings[index-1].password)
 
          view.executeJavaScript(js)
+         tabIndex = index
          //view.openDevTools()
         }
+        else{
+           var view = document.getElementById("view" + index)
+           view.parentNode.setAttribute('style',"width:" + 0 + "px ; height:" + 0 + "px")
+         view.setAttribute('style',"display:inline-flex; width:" + 0 + "px ; height:" + 0 + "px")
+        }
       });
+     
+
     }
   }
 });
@@ -194,4 +207,19 @@ function setUserSettings(index){
   settings[index].password = password
   var toSave = JSON.stringify(settings)
   fs.writeFile(__dirname + '/../app/settings.json',toSave)
+}
+
+window.onresize = function(e){
+  var view = document.getElementsByTagName("webview")[tabIndex]
+  var width = window.innerWidth
+  var height = window.innerHeight
+  view.setAttribute('style',"display:inline-flex; width:" + width + "px ; height:" + height + "px")
+}
+
+window.onchange() = function(e){
+   var view = document.getElementsByTagName("webview")[tabIndex]
+  var width = window.innerWidth
+  var height = window.innerHeight
+   view.parentNode.setAttribute('style',"width:" + width + "px ; height:" + height + "px")
+   view.setAttribute('style',"display:inline-flex; width:" + width + "px ; height:" + height + "px")
 }
