@@ -37,7 +37,7 @@ Vue.component('tabs', {
         if(tab.isActive){
          var view = document.getElementById("view" + index)
            var width = window.innerWidth
-          var height = window.innerHeight
+          var height = window.innerHeight - 220
            view.parentNode.setAttribute('style',"width:" + width + "px ; height:" + height + "px")
          view.setAttribute('style',"display:inline-flex; width:" + width + "px ; height:" + height + "px")
          var js = 'document.getElementById("email").setAttribute("value","username");document.getElementById("pass").setAttribute("value","password"); document.getElementById("loginbutton").click()'
@@ -212,14 +212,7 @@ function setUserSettings(index){
 window.onresize = function(e){
   var view = document.getElementsByTagName("webview")[tabIndex]
   var width = window.innerWidth
-  var height = window.innerHeight
+  var height = window.innerHeight - 220
   view.setAttribute('style',"display:inline-flex; width:" + width + "px ; height:" + height + "px")
 }
 
-window.onchange() = function(e){
-   var view = document.getElementsByTagName("webview")[tabIndex]
-  var width = window.innerWidth
-  var height = window.innerHeight
-   view.parentNode.setAttribute('style',"width:" + width + "px ; height:" + height + "px")
-   view.setAttribute('style',"display:inline-flex; width:" + width + "px ; height:" + height + "px")
-}
