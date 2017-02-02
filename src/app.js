@@ -1,4 +1,6 @@
 var fs = require('fs')
+var keytar = require('keytar')
+
 
 var settings
 var tabIndex = 0
@@ -34,7 +36,7 @@ Vue.component('tabs', {
     selectTab(selectedTab) {
       this.tabs.forEach((tab,index) => {
         tab.isActive = (tab.name == selectedTab.name);
-        if(tab.isActive){
+        if(tab.isActive) {
          var view = document.getElementById("view" + index)
            var width = window.innerWidth
           var height = window.innerHeight - 220
@@ -54,7 +56,7 @@ Vue.component('tabs', {
          view.setAttribute('style',"display:inline-flex; width:" + 0 + "px ; height:" + 0 + "px")
         }
       });
-     
+
 
     }
   }
@@ -142,9 +144,14 @@ window.onload = function(){
         if (err) console.log(err);
         else console.log(data);
 
+
+
         settings = JSON.parse(data)
-        for(var setting in settings){
-          vm.$children[1].$children[0].$children[0].addSetting(settings[setting])
+        console.log(settings)
+        for(var i = 0; i < settings.length; ++i){
+          var setting = settings[i]
+          setting.password = getUserPass(i)
+          vm.$children[1].$children[0].$children[0].addSetting(setting)
         }
     })
 
@@ -204,9 +211,20 @@ function setUserSettings(index){
   var userName = document.getElementById("user" + index).value
   var password = document.getElementById("pass" + index).value
   settings[index].username = userName
-  settings[index].password = password
+
+  //Stores password in native keychain
+  keytar.replacePassword('Chattrics', settings[index].name +':'+ userName, password);
+
   var toSave = JSON.stringify(settings)
   fs.writeFile(__dirname + '/../app/settings.json',toSave)
+}
+
+function getUserPass(index){
+  var userName = settings[index].username
+  var accountName = settings[index].name +':'+ userName
+  var password = keytar.getPassword('Chattrics', accountName)
+
+  return password;
 }
 
 window.onresize = function(e){
@@ -215,4 +233,3 @@ window.onresize = function(e){
   var height = window.innerHeight - 220
   view.setAttribute('style',"display:inline-flex; width:" + width + "px ; height:" + height + "px")
 }
-
