@@ -25,17 +25,18 @@
     "electron-reload": "^1.1.0",
     "electron-simple-updater": "^1.2.0",
     "font-awesome": "^4.7.0",
-    "keytar": "^3.0.2",
+    "keytar": "3.0.2",
     "vue": "^2.1.10"
   },
   "devDependencies": {
     "electron": "^1.4.15",
+    "electron-packager": "^8.7.0",
     "electron-rebuild": "^1.5.7",
     "electron-winstaller": "^2.5.1"
   },
   "scripts": {
     "electron-rebuild": "./node_modules/.bin/electron-rebuild",
-    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=app/icons/mac/icon.icns --prune=true --out=Release",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=app/icons/mac/app_icon.icns --prune=true --out=Release",
     "package-win-32": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=app/icons/win/icon.ico --prune=true --out=Release --version-string.ProductName=\"Chattrics\"",
     "package-win-64": "electron-packager . --overwrite --asar=true --platform=win32 --arch=x64 --icon=app/icons/win/icon.ico --prune=true --out=Release --version-string.ProductName=\"Chattrics\"",
     "package-linux-32": "electron-packager . --overwrite --platform=linux --arch=ia32 --icon=app/icons/png/512x512.png --prune=true --out=Release",
