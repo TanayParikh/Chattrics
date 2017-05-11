@@ -38,6 +38,11 @@ Install app node modules.
 npm install
 ```
 
+Configure node-key-tar (native system password management) for your system.
+```
+npm run electron-rebuild
+```
+
 Run the app.
 ```
 electron .
