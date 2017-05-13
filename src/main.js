@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, Menu } = require('electron')
 const path = require('path')
 const url = require('url')
 
@@ -35,6 +35,18 @@ function createWindow () {
     // when you should delete the corresponding element.
     win = null
   })
+
+  // Create the Application's main menu
+  var menuTemplate = [{
+      label: "Edit",
+      submenu: [
+          { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+          { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+          { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" }
+      ]}
+  ];
+
+  Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
 }
 
 // This method will be called when Electron has finished
