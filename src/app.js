@@ -1,9 +1,8 @@
-var fs = require('fs')
-var keytar = require('keytar')
+var fs = require('fs');
+var keytar = require('keytar');
 
-
-var settings
-var tabIndex = 0
+var settings;
+var tabIndex = 0;
 
 Vue.component('tabs', {
   template: `
@@ -25,9 +24,11 @@ Vue.component('tabs', {
     </div>
   </div>
   `,
+
   data() {
     return { tabs: [] };
   },
+
   created() {
     this.tabs = this.$children
   },
@@ -36,24 +37,28 @@ Vue.component('tabs', {
     selectTab(selectedTab) {
       this.tabs.forEach((tab,index) => {
         tab.isActive = (tab.name == selectedTab.name);
-        if(tab.isActive) {
-         var view = document.getElementById("view" + index)
-           var width = window.innerWidth
-          var height = window.innerHeight - 220
-           view.parentNode.setAttribute('style',"width:" + width + "px ; height:" + height + "px")
-         view.setAttribute('style',"display:inline-flex; width:" + width + "px ; height:" + height + "px")
-         var js = 'document.getElementById("email").setAttribute("value","username");document.getElementById("pass").setAttribute("value","password"); document.getElementById("loginbutton").click()'
-         js = js.replace("username", settings[index-1].username)
-         js = js.replace("password", settings[index-1].password)
+        if (tab.isActive) {
+          var view = document.getElementById("view" + index);
+          var width = window.innerWidth;
+          var height = window.innerHeight - 220;
 
-         view.executeJavaScript(js)
-         tabIndex = index
-         //view.openDevTools()
+          view.parentNode.setAttribute('style',"width:" + width + "px ; height:" + height + "px");
+          view.setAttribute('style',"display:inline-flex; width:" + width + "px ; height:" + height + "px");
+
+          var js = 
+          `document.getElementById("email").setAttribute("value","username");document.getElementById("pass").setAttribute("value","password"); document.getElementById("loginbutton").click()`;
+
+          js = js.replace("username", settings[index-1].username);
+          js = js.replace("password", settings[index-1].password);
+
+          view.executeJavaScript(js)
+          tabIndex = index
+          //view.openDevTools()
         }
         else{
-           var view = document.getElementById("view" + index)
-           view.parentNode.setAttribute('style',"width:" + 0 + "px ; height:" + 0 + "px")
-         view.setAttribute('style',"display:inline-flex; width:" + 0 + "px ; height:" + 0 + "px")
+          var view = document.getElementById("view" + index);
+          view.parentNode.setAttribute('style',"width:" + 0 + "px ; height:" + 0 + "px");
+          view.setAttribute('style',"display:inline-flex; width:" + 0 + "px ; height:" + 0 + "px");
         }
       });
 
@@ -69,7 +74,7 @@ Vue.component('tab', {
 
   props: {
     name: { required: true },
-    url: {required: true},
+    url: { required: true },
     selected: { default: false }
   },
 
@@ -91,9 +96,8 @@ Vue.component('addtab', {
 
   methods: {
     addTab(client){
-        var newTab = { name: client.name, url: client.url, img: client.img, isActive: false}
-        console.log(newTab)
-        this.$parent.$children[1]._data.tabs.push(newTab);
+      var newTab = { name: client.name, url: client.url, img: client.img, isActive: false}
+      this.$parent.$children[1]._data.tabs.push(newTab);
     }
   }
 });
@@ -129,8 +133,9 @@ Vue.component('settings',{
       </div>`,
 
   data(){
-    return {tabs: []};
+    return { tabs: [] };
   },
+
   methods: {
     addSetting(setting){
       this.$parent.$children[0]._data.tabs.push(setting);
@@ -139,35 +144,23 @@ Vue.component('settings',{
 });
 
 window.onload = function(){
-
   fs.readFile(__dirname + '/../app/settings.json', (err,data) => {
-        if (err) console.log(err);
-        else console.log(data);
+    settings = JSON.parse(data);
+    
+    for(var i = 0; i < settings.length; ++i){
+      var setting = settings[i];
+      setting.password = getUserPass(i);
+      vm.$children[1].$children[0].$children[0].addSetting(setting);
+    }
+  });
 
+  fs.readFile(__dirname + '/../app/services.json', (err,data) => {
+    var chatData = JSON.parse(data);
 
-
-        settings = JSON.parse(data)
-        console.log(settings)
-        for(var i = 0; i < settings.length; ++i){
-          var setting = settings[i]
-          setting.password = getUserPass(i)
-          vm.$children[1].$children[0].$children[0].addSetting(setting)
-        }
-    })
-
-
-   fs.readFile(__dirname + '/../app/services.json', (err,data) => {
-        if (err) console.log(err);
-        else console.log(data);
-
-        var chatData = JSON.parse(data)
-        for(var service in chatData){
-            console.log(vm.$children)
-            vm.$children[0].addTab(chatData[service])
-
-        }
-    })
-
+    for(var service in chatData){
+      vm.$children[0].addTab(chatData[service]);
+    }
+  });
 }
 
 
@@ -176,60 +169,54 @@ var vm = new Vue({
 });
 
 (function () {
-      const remote = require('electron').remote;
+  const remote = require('electron').remote;
 
-      function init() {
-        document.getElementById("min-btn").addEventListener("click", function (e) {
-          const window = remote.getCurrentWindow();
-          window.minimize();
-        });
+  function init() {
+    document.getElementById("min-btn").addEventListener("click", function (e) {
+      const window = remote.getCurrentWindow();
+      window.minimize();
+    });
 
-        document.getElementById("max-btn").addEventListener("click", function (e) {
-          const window = remote.getCurrentWindow();
-          if (!window.isMaximized()) {
-            window.maximize();
-          } else {
-            window.unmaximize();
-          }
-        });
+    document.getElementById("max-btn").addEventListener("click", function (e) {
+      const window = remote.getCurrentWindow();
+      window.isMaximized() ? window.unmaximize() : window.maximize();
+    });
 
-        document.getElementById("close-btn").addEventListener("click", function (e) {
-          const window = remote.getCurrentWindow();
-          window.close();
-        });
-      };
+    document.getElementById("close-btn").addEventListener("click", function (e) {
+      const window = remote.getCurrentWindow();
+      window.close();
+    });
+  };
 
-      document.onreadystatechange = function () {
-        if (document.readyState == "complete") {
-          init();
-        }
-      };
+  document.onreadystatechange = function () {
+    if (document.readyState == "complete") init();
+  };
 })();
 
 
 function setUserSettings(index){
-  var userName = document.getElementById("user" + index).value
-  var password = document.getElementById("pass" + index).value
-  settings[index].username = userName
+  var userName = document.getElementById("user" + index).value;
+  var password = document.getElementById("pass" + index).value;
+  settings[index].username = userName;
 
   //Stores password in native keychain
   keytar.replacePassword('Chattrics', settings[index].name +':'+ userName, password);
 
-  var toSave = JSON.stringify(settings)
-  fs.writeFile(__dirname + '/../app/settings.json',toSave)
+  var toSave = JSON.stringify(settings);
+  fs.writeFile(__dirname + '/../app/settings.json',toSave);
 }
 
 function getUserPass(index){
-  var userName = settings[index].username
-  var accountName = settings[index].name +':'+ userName
-  var password = keytar.getPassword('Chattrics', accountName)
+  var userName = settings[index].username;
+  var accountName = settings[index].name +':'+ userName;
+  var password = keytar.getPassword('Chattrics', accountName);
 
   return password;
 }
 
 window.onresize = function(e){
-  var view = document.getElementsByTagName("webview")[tabIndex]
-  var width = window.innerWidth
-  var height = window.innerHeight - 220
-  view.setAttribute('style',"display:inline-flex; width:" + width + "px ; height:" + height + "px")
+  var view = document.getElementsByTagName("webview")[tabIndex];
+  var width = window.innerWidth;
+  var height = window.innerHeight - 220;
+  view.setAttribute('style',"display:inline-flex; width:" + width + "px ; height:" + height + "px");
 }
