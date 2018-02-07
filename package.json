@@ -35,6 +35,7 @@
     "electron-winstaller": "^2.5.1"
   },
   "scripts": {
+    "rebuild": "npm rebuild --runtime=electron --target=1.7.10 --disturl=https://atom.io/download/atom-shell --arch=x64 --abi=48",
     "electron-rebuild": "./node_modules/.bin/electron-rebuild",
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=app/icons/mac/app_icon.icns --prune=true --out=Release",
     "package-win-32": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=app/icons/win/icon.ico --prune=true --out=Release --version-string.ProductName=\"Chattrics\"",
