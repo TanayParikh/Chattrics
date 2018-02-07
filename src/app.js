@@ -44,7 +44,9 @@ Vue.component('tabs', {
           view.setAttribute('style',"display:inline-flex; width:" + width + "px ; height:" + height + "px");
 
           var js = 
-          `document.getElementById("email").setAttribute("value","username");document.getElementById("pass").setAttribute("value","password"); document.getElementById("loginbutton").click()`;
+          `document.getElementById("email").setAttribute("value","username");
+           document.getElementById("pass").setAttribute("value","password");
+           document.getElementById("loginbutton").click()`;
 
           js = js.replace("username", settings[index-1].username);
           js = js.replace("password", settings[index-1].password);
@@ -147,7 +149,7 @@ window.onload = function(){
     
     for(var i = 0; i < settings.length; ++i){
       var setting = settings[i];
-      setting.password = getUserPass(i);
+      getUserPass(i).then(password => setting.password = password);
       vm.$children[1].$children[0].$children[0].addSetting(setting);
     }
   });
