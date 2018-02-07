@@ -18,9 +18,7 @@ Vue.component('tabs', {
       <slot> </slot>
       <div v-for="(tab,index) in tabs">
         <webview v-bind:id="'view' + index" v-bind:src="tab.url" style="display:inline-flex; width:100%; height:100%"></webview>
-
       </div>
-
     </div>
   </div>
   `,
