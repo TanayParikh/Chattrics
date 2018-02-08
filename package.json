@@ -1,15 +1,15 @@
 {
   "name": "Chattrics",
   "productName": "Chattrics",
-  "version": "0.0.1",
+  "version": "0.5.0",
   "description": "Aggregated, open source chat client.",
-  "repository": "TanayParikh/Chattrics",
-  "homepage": "https://github.com/TanayParikh/Chattrics",
+  "repository": "https://github.com/TanayParikh/Chattrics",
+  "homepage": "https://chattrics.com",
   "license": "",
   "author": {
-    "name": "Tanay Parikh & Chris Hilts",
+    "name": "Tanay Parikh and Chris Hilts",
     "email": "chat@chattrics.com",
-    "url": "https://chattrics.com"
+    "url": "https://tanayparikh.com"
   },
   "keywords": [
     "chat"
@@ -22,33 +22,53 @@
   "dependencies": {
     "bulma": "^0.6.2",
     "chart.js": "^2.4.0",
+    "electron-is-dev": "^0.3.0",
     "electron-reload": "^1.1.0",
     "electron-simple-updater": "^1.2.0",
+    "electron-updater": "^2.20.1",
     "font-awesome": "^4.7.0",
     "keytar": "4.1.0",
     "vue": "^2.1.10"
   },
   "devDependencies": {
     "electron": "^1.*.*",
-    "electron-packager": "^10.1.2",
+    "electron-builder": "^19.56.0",
+    "electron-builder-squirrel-windows": "latest",
     "electron-rebuild": "^1.5.7",
     "electron-winstaller": "^2.5.1"
   },
   "scripts": {
+    "postinstall": "install-app-deps",
+    "pack": "build --dir",
+    "dist": "build",
     "rebuild": "npm rebuild --runtime=electron --target=1.7.10 --disturl=https://atom.io/download/atom-shell --arch=x64 --abi=48",
-    "electron-rebuild": "./node_modules/.bin/electron-rebuild",
-    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=app/icons/mac/app_icon.icns --prune=true --out=Release",
-    "package-win-32": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=app/icons/win/icon.ico --prune=true --out=Release --version-string.ProductName=\"Chattrics\"",
-    "package-win-64": "electron-packager . --overwrite --asar=true --platform=win32 --arch=x64 --icon=app/icons/win/icon.ico --prune=true --out=Release --version-string.ProductName=\"Chattrics\"",
-    "package-linux-32": "electron-packager . --overwrite --platform=linux --arch=ia32 --icon=app/icons/png/512x512.png --prune=true --out=Release",
-    "package-linux-64": "electron-packager . --overwrite --platform=linux --arch=x64 --icon=app/icons/png/512x512.png --prune=true --out=Release",
-    "create-installer-win": "node Installers/Windows/createinstaller.js"
+    "electron-rebuild": "./node_modules/.bin/electron-rebuild"
   },
   "build": {
-    "appId": "chattrics",
-    "app-category-type": "public.app-category.social",
+    "appId": "com.chattrics",
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
     "win": {
-      "iconUrl": "https://raw.githubusercontent.com/TanayParikh/Chattrics/master/app/icons/win/app_icon.ico"
+      "target": "squirrel",
+      "icon": "build\\icon.ico"
     }
   }
 }
