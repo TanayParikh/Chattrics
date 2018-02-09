@@ -25,6 +25,7 @@
     "electron-is-dev": "^0.3.0",
     "electron-reload": "^1.1.0",
     "electron-simple-updater": "^1.2.0",
+    "electron-squirrel-startup": "^1.0.0",
     "electron-updater": "^2.20.1",
     "font-awesome": "^4.7.0",
     "keytar": "4.1.0",
