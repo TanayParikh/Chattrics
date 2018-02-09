@@ -44,19 +44,19 @@ Vue.component('tabs', {
           view.setAttribute('style',"display:inline-flex; width:" + width + "px ; height:" + height + "px");
 
           var js = 
-          `document.getElementById("email").setAttribute("value","username");
-           document.getElementById("pass").setAttribute("value","password");
-           document.getElementById("loginbutton").click()`;
+            `document.getElementById("email").setAttribute("value","username");
+             document.getElementById("pass").setAttribute("value","password");`;
 
           var username = settings[index-1].username;
           var password = settings[index-1].password;
-          
+
           if (username) js = js.replace("username", username);
           if (password) js = js.replace("password", password);
 
-          view.executeJavaScript(js)
-          tabIndex = index
-          //view.openDevTools()
+          if (username && password) js += 'document.getElementById("loginbutton").click()';
+
+          view.executeJavaScript(js);
+          tabIndex = index;
         }
         else{
           var view = document.getElementById("view" + index);
