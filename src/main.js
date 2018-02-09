@@ -1,8 +1,16 @@
-const { app, BrowserWindow, Menu } = require('electron')
-const path = require('path')
-const url = require('url')
+const electron = require('electron'),
+        { app, BrowserWindow, Menu } = require('electron'),
+        path = require('path'),
+        url = require('url'),
+        isDev = require('electron-is-dev'),
+        {appUpdater} = require('./autoupdater');
 
-require("electron-reload")(__dirname);
+if (isDev)
+  require("electron-reload")(__dirname);
+
+if (require('electron-squirrel-startup')) {
+	app.quit();
+}
 
 // Just place this code at the entry point of your application:
 //const updater = require('electron-simple-updater');
@@ -12,9 +20,19 @@ require("electron-reload")(__dirname);
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 
+// Funtion to check the current OS. As of now there is no proper method to add auto-updates to linux platform.
+function isWindowsOrmacOS() {
+	return process.platform === 'darwin' || process.platform === 'win32' || process.platform === 'win32_x64';
+}
+
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({width: 1190, height: 720, icon: __dirname + '/../app/icons/png/256x256.png', frame:false});
+  win = new BrowserWindow({
+    width: 1190,
+    height: 720,
+    icon: __dirname + '/../app/icons/png/256x256.png',
+    frame:false
+  });
 
   // and load the index.html of the app.
   win.loadURL(url.format({
@@ -23,8 +41,19 @@ function createWindow () {
     slashes: true
   }));
 
+  const page = win.webContents;
+
   // Open the DevTools.
-  //win.webContents.openDevTools()
+  if (isDev)
+    page.openDevTools();
+
+  page.once('did-frame-finish-load', () => {
+    const checkOS = isWindowsOrmacOS();
+    if (checkOS && !isDev) {
+      // Initate auto-updates on macOs and windows
+      appUpdater();
+    }
+  });
 
   // Emitted when the window is closed.
   win.on('closed', () => {
