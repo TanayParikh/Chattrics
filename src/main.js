@@ -12,10 +12,6 @@ if (require('electron-squirrel-startup')) {
 	app.quit();
 }
 
-// Just place this code at the entry point of your application:
-//const updater = require('electron-simple-updater');
-//updater.init('https://raw.githubusercontent.com/TanayParikh/Chattrics/master/Release/updates.json');
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
