@@ -48,8 +48,11 @@ Vue.component('tabs', {
            document.getElementById("pass").setAttribute("value","password");
            document.getElementById("loginbutton").click()`;
 
-          js = js.replace("username", settings[index-1].username);
-          js = js.replace("password", settings[index-1].password);
+          var username = settings[index-1].username;
+          var password = settings[index-1].password;
+          
+          if (username) js = js.replace("username", username);
+          if (password) js = js.replace("password", password);
 
           view.executeJavaScript(js)
           tabIndex = index
