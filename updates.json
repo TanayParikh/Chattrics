@@ -1,0 +1,8 @@
+{
+    "win32-x64-prod": {
+        "readme": "Electron-simple-updater\nRelease",
+        "update": "https://github.com/TanayParikh/Chattrics/releases/download/v0.5.4",
+        "install": "https://github.com/TanayParikh/Chattrics/releases/download/v0.5.4/Chattrics.Setup.win.0.5.4.exe",
+        "version": "0.5.4"
+    }
+}
