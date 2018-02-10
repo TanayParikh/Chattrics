@@ -2,24 +2,24 @@ const electron = require('electron'),
         { app, BrowserWindow, Menu } = require('electron'),
         path = require('path'),
         url = require('url'),
-        isDev = require('electron-is-dev'),
-        {appUpdater} = require('./autoupdater');
+        isDev = require('electron-is-dev');
 
-if (isDev)
+if (isDev) {
   require("electron-reload")(__dirname);
+} else {
+  const updater = require('electron-simple-updater');
+  updater.init('https://raw.githubusercontent.com/TanayParikh/Chattrics/master/updates.json');
+}
 
 if (require('electron-squirrel-startup')) {
 	app.quit();
 }
 
+
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
-
-// Funtion to check the current OS. As of now there is no proper method to add auto-updates to linux platform.
-function isWindowsOrmacOS() {
-	return process.platform === 'darwin' || process.platform === 'win32' || process.platform === 'win32_x64';
-}
 
 function createWindow () {
   // Create the browser window.
@@ -42,14 +42,6 @@ function createWindow () {
   // Open the DevTools.
   if (isDev)
     page.openDevTools();
-
-  page.once('did-frame-finish-load', () => {
-    const checkOS = isWindowsOrmacOS();
-    if (checkOS && !isDev) {
-      // Initate auto-updates on macOs and windows
-      appUpdater();
-    }
-  });
 
   // Emitted when the window is closed.
   win.on('closed', () => {
